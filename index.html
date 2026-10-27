@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Computer Network - Career Activity</title>
+
+<!-- ============ SHARED STYLES (screen + print) ============ -->
+<style id="base-css">
+:root{
+  --navy:#0b2a5b;
+  --blue:#2563a8;
+  --tint:#eaf1fa;
+  --line:#b4c5de;
+  --ink:#162033;
+  --muted:#42526a;
+  --pf:7.6;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;background:#fff;color:var(--ink);line-height:1.32}
+h1,h2,h3,p,ul,blockquote,fieldset{margin:0}
+fieldset{border:0;padding:0;min-width:0}
+ul{padding-left:1.1rem}
+button{font:inherit}
+
+.sheet{position:relative;display:flex;flex-direction:column;gap:.55rem}
+.sheet>*{flex-shrink:0}
+
+/* Header */
+.kicker{font-weight:700;letter-spacing:.16em;font-size:.82rem;color:var(--blue)}
+.title{color:var(--navy);font-size:1.5rem;line-height:1.2;font-weight:800}
+.title-sm{color:var(--navy);font-size:1.35rem;line-height:1.15;font-weight:800;letter-spacing:.02em}
+.subtitle{color:var(--blue);font-size:.98rem;font-weight:600}
+.hdr{border-left:.3rem solid var(--navy);padding-left:.7rem;display:flex;flex-direction:column;gap:.2rem}
+
+/* Fields */
+.field{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.field>label,.lbl{font-size:.8rem;font-weight:700;color:var(--navy);line-height:1.25}
+.sub{font-weight:400;color:var(--muted)}
+input[type=text],input[type=url],textarea{
+  width:100%;font:inherit;font-size:.92rem;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:4px;padding:.3rem .45rem;
+}
+textarea{
+  display:block;resize:none;overflow:hidden;line-height:1.32;
+  height:calc(var(--rows,3) * 1.32em + .8rem);
+}
+::placeholder{color:#6b7a90;opacity:1}
+:focus-visible{outline:2px solid #1d4ed8;outline-offset:1px}
+
+.grid{display:grid;gap:.5rem}
+.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.idgrid{display:grid;gap:.4rem .6rem;grid-template-columns:5fr 3fr 2fr 2fr}
+.idgrid .wide{grid-column:1/-1}
+
+/* Part banner */
+.part{background:var(--navy);color:#fff;font-size:.95rem;font-weight:700;letter-spacing:.04em;padding:.28rem .65rem;border-radius:3px}
+.intro{font-size:.84rem;color:var(--muted)}
+
+/* Case study cards */
+.cases{display:grid;gap:.45rem;grid-template-columns:repeat(5,minmax(0,1fr));border:0}
+.case-card{
+  position:relative;display:flex;flex-direction:column;gap:.2rem;
+  padding:.4rem .45rem;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;
+}
+.case-card input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.case-card:focus-within{outline:2px solid #1d4ed8;outline-offset:1px}
+.case-card .top{display:flex;align-items:center;justify-content:space-between;gap:.3rem}
+.case-card .ico{width:1.35rem;height:1.35rem;color:var(--blue);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.case-card .num{font-size:.72rem;font-weight:800;color:var(--blue);letter-spacing:.05em}
+.case-card .ct{font-weight:700;color:var(--navy);font-size:.84rem;line-height:1.2}
+.case-card .cd{font-size:.74rem;color:var(--muted);line-height:1.28}
+.case-card .tag{display:none;font-size:.66rem;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--navy);border-radius:999px;padding:.05rem .4rem}
+.case-card.selected{border-color:var(--navy);background:var(--tint);box-shadow:0 0 0 1.5px var(--navy) inset}
+.case-card.selected .tag{display:inline-block}
+
+/* Question cards */
+.qcard{border:1px solid var(--line);border-radius:6px;padding:.4rem .5rem;display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.qh{display:flex;align-items:center;gap:.4rem;color:var(--navy);font-size:.92rem;font-weight:800;line-height:1.2}
+.qh .n{display:inline-flex;align-items:center;justify-content:center;flex:none;width:1.35rem;height:1.35rem;border-radius:50%;background:var(--blue);color:#fff;font-size:.8rem}
+.qnote{font-size:.78rem;color:var(--muted)}
+.two{display:grid;gap:.4rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.three{display:grid;gap:.4rem;grid-template-columns:repeat(3,minmax(0,1fr))}
+.mini{font-size:.76rem;font-weight:800;color:var(--blue);letter-spacing:.06em;text-transform:uppercase}
+
+/* Part D + checklist */
+.callout{border-left:.28rem solid var(--blue);background:var(--tint);padding:.4rem .6rem;font-size:.88rem;border-radius:0 4px 4px 0}
+.qlist{font-size:.86rem;columns:1}
+.qlist li{margin:.05rem 0}
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.25rem .8rem}
+.check{display:flex;align-items:flex-start;gap:.45rem;font-size:.86rem;line-height:1.25}
+.check input{width:1.05rem;height:1.05rem;margin:.1rem 0 0;flex:none;accent-color:var(--navy)}
+.remember{border:1px solid var(--navy);border-radius:6px;padding:.5rem .7rem;text-align:center;font-style:italic;color:var(--navy);font-size:.92rem;font-weight:600}
+.pagefoot{margin-top:auto;display:flex;flex-direction:column;gap:.4rem}
+.smallfoot{text-align:center;font-size:.72rem;color:var(--muted);letter-spacing:.05em;border-top:1px solid var(--line);padding-top:.3rem}
+</style>
+
+<!-- ============ SCREEN-ONLY STYLES ============ -->
+<style id="screen-css" media="screen">
+html{font-size:15px}
+body{background:#eef2f8}
+.toolbar{
+  position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;
+  display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem;padding:.6rem 1rem;
+  box-shadow:0 2px 8px rgba(11,42,91,.35);
+}
+.tb-title{font-weight:800;letter-spacing:.04em}
+.tb-actions{display:flex;flex-wrap:wrap;gap:.5rem}
+.btn{
+  min-height:2.6rem;padding:.4rem .95rem;border-radius:6px;border:1px solid #fff;background:#fff;color:var(--navy);
+  font-weight:700;cursor:pointer;
+}
+.btn:hover{background:#dce8f8}
+.btn-ghost{background:transparent;color:#fff;border-color:#9fb6da}
+.btn-ghost:hover{background:rgba(255,255,255,.14)}
+.btn-primary{background:#2f80d6;border-color:#2f80d6;color:#fff}
+.btn-primary:hover{background:#2570c0}
+.btn:focus-visible{outline:3px solid #ffd166;outline-offset:2px}
+#status{font-size:.9rem;min-height:1.2em;margin:0}
+#status.ok{color:#b7f0c6}
+#status.err{color:#ffd6a5}
+.wrap{max-width:68rem;margin:0 auto;padding:1rem}
+.note{background:#fff;border:1px solid var(--line);border-left:.28rem solid var(--blue);border-radius:6px;padding:.6rem .9rem;font-size:.9rem;color:var(--muted);margin-bottom:1rem}
+.note ul{margin-top:.2rem}
+.sheet{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 4px 18px rgba(11,42,91,.1);padding:1.4rem 1.5rem;margin-bottom:1.2rem;gap:.8rem}
+.sheet::before{content:attr(data-label);position:absolute;top:.5rem;right:.8rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;color:#7a8aa3}
+.case-card:hover{border-color:var(--blue);background:#f6f9fe}
+.case-card.selected:hover{background:var(--tint)}
+
+@media (max-width:1050px){
+  .cases{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .c3,.three{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  html{font-size:16px}
+  .cases{grid-template-columns:1fr}
+  .c2,.two{grid-template-columns:1fr}
+  .idgrid{grid-template-columns:1fr 1fr}
+  .sheet{padding:1rem .9rem}
+  .toolbar{position:static;padding:.5rem .7rem}
+  .tb-actions{width:100%}
+  .btn{flex:1 1 45%;min-height:2.8rem}
+  .wrap{padding:.6rem}
+}
+@media (max-width:420px){
+  .idgrid{grid-template-columns:1fr}
+}
+</style>
+
+<!-- ============ PRINT-ONLY STYLES (two A4 portrait pages) ============ -->
+<style id="print-css" media="print">
+@page{size:A4 portrait;margin:9mm 10mm}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html{font-size:calc(var(--pf) * 1pt)}
+body{background:#fff}
+.noprint{display:none!important}
+.wrap{margin:0;padding:0;max-width:none}
+.sheet{
+  width:190mm;height:276mm;overflow:hidden;padding:0;margin:0;border:0;border-radius:0;box-shadow:none;
+  gap:.42rem;break-after:page;page-break-after:always;
+}
+.sheet:last-child{break-after:auto;page-break-after:auto}
+.sheet::before{content:none}
+::placeholder{color:transparent!important}
+input[type=text],input[type=url],textarea{border:.5pt solid #7d8fae;border-radius:2px;padding:.16rem .3rem}
+textarea{height:calc(var(--rows,3) * 1.32em + .45rem)}
+.qcard{border-width:.5pt;padding:.28rem .38rem;gap:.2rem}
+.case-card{padding:.28rem .35rem;gap:.12rem}
+.part{padding:.18rem .5rem}
+.callout{padding:.28rem .5rem}
+.remember{padding:.35rem .6rem}
+.qh .n,.case-card .tag{background:var(--navy)}
+.case-card,.qcard,.callout,.remember{break-inside:avoid}
+</style>
+</head>
+
+<body>
+<noscript><p style="padding:1rem;color:#9a3412">JavaScript is turned off. You can still read and print this worksheet, but saving progress and case selection highlighting need JavaScript.</p></noscript>
+
+<!-- ============ TOOLBAR (hidden when printing) ============ -->
+<div class="toolbar noprint" role="group" aria-label="Worksheet actions">
+  <div class="tb-title">ACN Career Activity</div>
+  <div class="tb-actions">
+    <button type="button" class="btn" id="btn-save">Save Progress</button>
+    <button type="button" class="btn" id="btn-load">Load Saved Progress</button>
+    <button type="button" class="btn btn-ghost" id="btn-clear">Clear All Answers</button>
+    <button type="button" class="btn btn-primary" id="btn-print">Print / Save as PDF</button>
+  </div>
+  <p id="status" role="status" aria-live="polite"></p>
+</div>
+
+<main class="wrap" id="worksheet">
+
+<aside class="note noprint" aria-label="How to use this worksheet">
+  <strong>How to use:</strong>
+  <ul>
+    <li>Work in groups of 4 to 5. Type your answers directly into the boxes. They grow as you type.</li>
+    <li>Press <em>Save Progress</em> to store your work in this browser on this device. Use <em>Load Saved Progress</em> to bring it back.</li>
+    <li>To print: press <em>Print / Save as PDF</em>, choose <em>A4</em>, scale <em>100%</em>, and turn off "Headers and footers". The worksheet prints on exactly two pages.</li>
+  </ul>
+</aside>
+
+<!-- =================================================================== -->
+<!-- PAGE 1                                                              -->
+<!-- =================================================================== -->
+<section class="sheet" id="page1" aria-label="Page 1: Case study and career exploration" data-label="PAGE 1 OF 2">
+
+  <header class="hdr">
+    <p class="kicker">ADVANCED COMPUTER NETWORK</p>
+    <h1 class="title">Beyond the Classroom: Solving Real-World Network Challenges and Exploring Future Careers</h1>
+  </header>
+
+  <div class="idgrid">
+    <div class="field">
+      <label for="f-name">Student name / group leader</label>
+      <input type="text" id="f-name" data-f autocomplete="name" placeholder="Full name">
+    </div>
+    <div class="field">
+      <label for="f-id">Student ID</label>
+      <input type="text" id="f-id" data-f autocomplete="off" placeholder="Student ID">
+    </div>
+    <div class="field">
+      <label for="f-case">Case study no.</label>
+      <input type="text" id="f-case" data-f inputmode="numeric" autocomplete="off" placeholder="1 to 5">
+    </div>
+    <div class="field">
+      <label for="f-date">Date</label>
+      <input type="text" id="f-date" data-f autocomplete="off" placeholder="DD/MM/YYYY">
+    </div>
+    <div class="field wide">
+      <label for="f-members">Group members</label>
+      <input type="text" id="f-members" data-f autocomplete="off" placeholder="Names of all group members (4 to 5 students)">
+    </div>
+  </div>
+
+  <!-- ---------------- PART A ---------------- -->
+  <h2 class="part">PART A: REAL-WORLD CASE STUDY</h2>
+  <p class="intro"><strong>Instructions:</strong> Work in groups of 4 to 5 students. Select ONE case study, discuss it together, then answer questions 1 to 3 in your own words. Use credible sources and do not invent facts.</p>
+
+  <fieldset class="cases" id="cases">
+    <legend class="lbl" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Select one case study</legend>
+
+    <label class="case-card" for="case1">
+      <input type="radio" name="case" id="case1" value="1">
+      <span class="top">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span class="num">CASE 1</span><span class="tag">SELECTED</span>
+      </span>
+      <span class="ct">Cyberattack on a Banking Network</span>
+      <span class="cd">A bank detects suspicious network traffic and unauthorized login attempts. Investigate security weaknesses and recommend solutions using ACLs, firewalls, network segmentation, and intrusion detection systems.</span>
+    </label>
+
+    <label class="case-card" for="case2">
+      <input type="radio" name="case" id="case2" value="2">
+      <span class="top">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z"/></svg>
+        <span class="num">CASE 2</span><span class="tag">SELECTED</span>
+      </span>
+      <span class="ct">Network Congestion in a Smart Hospital</span>
+      <span class="cd">A hospital has slow access to medical records and interrupted video consultations. Investigate congestion, QoS, VLANs, redundancy, and network monitoring.</span>
+    </label>
+
+    <label class="case-card" for="case3">
+      <input type="radio" name="case" id="case3" value="3">
+      <span class="top">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a5 5 0 0 1-.6-9.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1 0 9z"/></svg>
+        <span class="num">CASE 3</span><span class="tag">SELECTED</span>
+      </span>
+      <span class="ct">Network Outage in a Cloud-Based Company</span>
+      <span class="cd">Employees cannot reach cloud-hosted company applications, although their internet connections work. Investigate routing, DNS, VPNs, connectivity, and troubleshooting.</span>
+    </label>
+
+    <label class="case-card" for="case4">
+      <input type="radio" name="case" id="case4" value="4">
+      <span class="top">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.2" r="1"/></svg>
+        <span class="num">CASE 4</span><span class="tag">SELECTED</span>
+      </span>
+      <span class="ct">Designing a Secure Smart Campus</span>
+      <span class="cd">A university plans to connect student devices, staff computers, CCTV cameras, and IoT devices. Propose a secure, reliable, scalable network using VLANs, IPv6, DHCP, routing, and access control.</span>
+    </label>
+
+    <label class="case-card" for="case5">
+      <input type="radio" name="case" id="case5" value="5">
+      <span class="top">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/><path d="M7 6.5h.01M7 17.5h.01"/></svg>
+        <span class="num">CASE 5</span><span class="tag">SELECTED</span>
+      </span>
+      <span class="ct">Network Infrastructure for an AI Data Centre</span>
+      <span class="cd">An AI company sees network congestion as its server count grows. Investigate high-speed networking, network fabrics, redundancy, load balancing, and Software-Defined Networking (SDN).</span>
+    </label>
+  </fieldset>
+
+  <div class="grid c3">
+    <section class="qcard" aria-labelledby="q1h">
+      <h3 class="qh" id="q1h"><span class="n">1</span>Understanding the Problem</h3>
+      <div class="field">
+        <label for="q1a">What is the main networking problem?</label>
+        <textarea id="q1a" data-f style="--rows:4" placeholder="Describe the problem in your own words"></textarea>
+      </div>
+      <div class="field">
+        <label for="q1b">Identify one real organization or incident related to this problem. What happened, and what was its impact?</label>
+        <textarea id="q1b" data-f style="--rows:7" placeholder="Name the organization or incident, what happened, and the impact. Cite your source in the references box on page 2"></textarea>
+      </div>
+    </section>
+
+    <section class="qcard" aria-labelledby="q2h">
+      <h3 class="qh" id="q2h"><span class="n">2</span>Technical Analysis</h3>
+      <div class="field">
+        <label for="q2a">What are the possible causes of the problem?</label>
+        <textarea id="q2a" data-f style="--rows:5" placeholder="List the likely causes and how you would confirm each one"></textarea>
+      </div>
+      <div class="field">
+        <label for="q2b">Which advanced networking technologies, protocols, or tools could help address it? Explain why.</label>
+        <textarea id="q2b" data-f style="--rows:6" placeholder="Name each technology, protocol or tool and explain why it helps"></textarea>
+      </div>
+    </section>
+
+    <section class="qcard" aria-labelledby="q3h">
+      <h3 class="qh" id="q3h"><span class="n">3</span>Proposed Solution</h3>
+      <div class="field">
+        <label for="q3a">What solution would your group recommend, and how would it work?</label>
+        <textarea id="q3a" data-f style="--rows:3" placeholder="Describe your recommended solution and how it works"></textarea>
+      </div>
+      <div class="field">
+        <label for="q3b">What are the expected benefits and possible limitations?</label>
+        <textarea id="q3b" data-f style="--rows:3" placeholder="State the benefits and the limitations"></textarea>
+      </div>
+      <div class="field">
+        <label for="q3c">Network diagram or troubleshooting flowchart</label>
+        <textarea id="q3c" data-f style="--rows:5" placeholder="Sketch here on paper after printing, or describe it and attach a separate sheet"></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- ---------------- PART B ---------------- -->
+  <h2 class="part">PART B: EXPLORING FUTURE NETWORKING CAREERS</h2>
+
+  <section class="qcard" aria-labelledby="q4h">
+    <h3 class="qh" id="q4h"><span class="n">4</span>Career Opportunities
+      <span class="qnote" style="font-weight:400">Identify TWO careers related to your case study.</span></h3>
+    <div class="two">
+      <div class="field" style="gap:.2rem">
+        <p class="mini">Career 1</p>
+        <label for="c1-title">Career title</label>
+        <input type="text" id="c1-title" data-f list="career-list" autocomplete="off" placeholder="Choose a suggestion or type your own">
+        <label for="c1-resp">Job responsibilities</label>
+        <textarea id="c1-resp" data-f style="--rows:2" placeholder="Main duties in this role"></textarea>
+        <label for="c1-skills">Required technical skills and qualifications</label>
+        <textarea id="c1-skills" data-f style="--rows:2" placeholder="Skills and qualifications employers expect"></textarea>
+        <label for="c1-cert">Relevant certifications or practical experience</label>
+        <textarea id="c1-cert" data-f style="--rows:2" placeholder="Certifications, labs or projects"></textarea>
+      </div>
+      <div class="field" style="gap:.2rem">
+        <p class="mini">Career 2</p>
+        <label for="c2-title">Career title</label>
+        <input type="text" id="c2-title" data-f list="career-list" autocomplete="off" placeholder="Choose a suggestion or type your own">
+        <label for="c2-resp">Job responsibilities</label>
+        <textarea id="c2-resp" data-f style="--rows:2" placeholder="Main duties in this role"></textarea>
+        <label for="c2-skills">Required technical skills and qualifications</label>
+        <textarea id="c2-skills" data-f style="--rows:2" placeholder="Skills and qualifications employers expect"></textarea>
+        <label for="c2-cert">Relevant certifications or practical experience</label>
+        <textarea id="c2-cert" data-f style="--rows:2" placeholder="Certifications, labs or projects"></textarea>
+      </div>
+    </div>
+    <datalist id="career-list">
+      <option value="Network Engineer"></option>
+      <option value="Network Security Engineer"></option>
+      <option value="Cloud Network Engineer"></option>
+      <option value="Network Architect"></option>
+      <option value="Network Automation Engineer"></option>
+      <option value="Data Centre Network Engineer"></option>
+    </datalist>
+  </section>
+
+  <section class="qcard" aria-labelledby="q5h">
+    <h3 class="qh" id="q5h"><span class="n">5</span>Industry Requirements
+      <span class="qnote" style="font-weight:400">Investigate ONE actual job advertisement for either career. Use a real, current advertisement.</span></h3>
+    <div class="grid" style="grid-template-columns:3fr 3fr 4fr">
+      <div class="field"><label for="j-title">Job title</label><input type="text" id="j-title" data-f autocomplete="off" placeholder="As written in the advertisement"></div>
+      <div class="field"><label for="j-company">Company</label><input type="text" id="j-company" data-f autocomplete="off" placeholder="Hiring company"></div>
+      <div class="field"><label for="j-link">Job advertisement link</label><input type="url" id="j-link" data-f autocomplete="off" placeholder="https://"></div>
+    </div>
+    <div class="three">
+      <div class="field"><label for="j-s1">Important skill or qualification 1</label><input type="text" id="j-s1" data-f autocomplete="off" placeholder="Skill 1"></div>
+      <div class="field"><label for="j-s2">Important skill or qualification 2</label><input type="text" id="j-s2" data-f autocomplete="off" placeholder="Skill 2"></div>
+      <div class="field"><label for="j-s3">Important skill or qualification 3</label><input type="text" id="j-s3" data-f autocomplete="off" placeholder="Skill 3"></div>
+    </div>
+    <div class="field">
+      <label for="j-rel">How do these skills relate to Advanced Computer Network?</label>
+      <textarea id="j-rel" data-f style="--rows:2" placeholder="Link each skill to topics you studied in this course"></textarea>
+    </div>
+  </section>
+
+  <div class="grid c2">
+    <section class="qcard" aria-labelledby="q6h">
+      <h3 class="qh" id="q6h"><span class="n">6</span>Career Growth</h3>
+      <div class="field"><label for="g-entry">Potential entry-level position</label><input type="text" id="g-entry" data-f autocomplete="off" placeholder="Position a fresh graduate could apply for"></div>
+      <div class="field"><label for="g-prog">Possible career progression</label><input type="text" id="g-prog" data-f autocomplete="off" placeholder="Typical path from entry level upwards"></div>
+      <div class="two">
+        <div class="field"><label for="g-s1">Technical skill to develop 1</label><input type="text" id="g-s1" data-f autocomplete="off" placeholder="Skill 1"></div>
+        <div class="field"><label for="g-s2">Technical skill to develop 2</label><input type="text" id="g-s2" data-f autocomplete="off" placeholder="Skill 2"></div>
+      </div>
+    </section>
+
+    <section class="qcard" aria-labelledby="q7h">
+      <h3 class="qh" id="q7h"><span class="n">7</span>Career Action Plan</h3>
+      <div class="field"><label for="a-res">ONE certification, practical project, or learning resource for a fresh graduate</label><input type="text" id="a-res" data-f autocomplete="off" placeholder="Name of the certification, project or resource"></div>
+      <div class="field"><label for="a-why">Why is it useful?</label><textarea id="a-why" data-f style="--rows:3" placeholder="Explain how it prepares a graduate for the selected career"></textarea></div>
+    </section>
+  </div>
+</section>
+
+<!-- =================================================================== -->
+<!-- PAGE 2                                                              -->
+<!-- =================================================================== -->
+<section class="sheet" id="page2" aria-label="Page 2: Individual reflection and interview question" data-label="PAGE 2 OF 2">
+
+  <header class="hdr">
+    <h2 class="title-sm">BEYOND THE CLASSROOM</h2>
+    <p class="subtitle">Solving Real-World Network Challenges and Exploring Future Careers</p>
+  </header>
+
+  <div class="grid c2">
+    <div class="field"><label for="p2-name">Student name (individual)</label><input type="text" id="p2-name" data-f autocomplete="name" placeholder="Full name"></div>
+    <div class="field"><label for="p2-id">Student ID</label><input type="text" id="p2-id" data-f autocomplete="off" placeholder="Student ID"></div>
+  </div>
+
+  <!-- ---------------- PART C ---------------- -->
+  <h2 class="part">PART C: INDIVIDUAL CAREER REFLECTION</h2>
+
+  <div class="grid c2">
+    <section class="qcard" aria-labelledby="r1h">
+      <h3 class="qh" id="r1h"><span class="n">1</span>Career of Interest</h3>
+      <div class="field"><label for="r1">Which networking career would you consider pursuing after graduation, and why?</label>
+        <textarea id="r1" data-f style="--rows:7" placeholder="Name the career and give your reasons"></textarea></div>
+    </section>
+    <section class="qcard" aria-labelledby="r2h">
+      <h3 class="qh" id="r2h"><span class="n">2</span>Current Strengths</h3>
+      <div class="field"><label for="r2">What networking knowledge or technical skills have you developed through your studies?</label>
+        <textarea id="r2" data-f style="--rows:7" placeholder="Mention topics, tools or labs you have worked with"></textarea></div>
+    </section>
+  </div>
+
+  <div class="grid c2">
+    <section class="qcard" aria-labelledby="r3h">
+      <h3 class="qh" id="r3h"><span class="n">3</span>Identifying Skill Gaps</h3>
+      <div class="field"><label for="r3a">Technical skill to improve 1</label>
+        <textarea id="r3a" data-f style="--rows:4" placeholder="Skill and why you need to improve it"></textarea></div>
+      <div class="field"><label for="r3b">Technical skill to improve 2</label>
+        <textarea id="r3b" data-f style="--rows:4" placeholder="Skill and why you need to improve it"></textarea></div>
+    </section>
+    <section class="qcard" aria-labelledby="r4h">
+      <h3 class="qh" id="r4h"><span class="n">4</span>Preparing for the Industry</h3>
+      <div class="field"><label for="r4a">ONE certification, practical project, or learning resource</label>
+        <input type="text" id="r4a" data-f autocomplete="off" placeholder="Name it"></div>
+      <div class="field"><label for="r4b">How could it improve your employability?</label>
+        <textarea id="r4b" data-f style="--rows:6" placeholder="Explain how it develops your skills and helps you get hired"></textarea></div>
+    </section>
+  </div>
+
+  <section class="qcard" aria-labelledby="r5h">
+    <h3 class="qh" id="r5h"><span class="n">5</span>My Six-Month Career Action Plan</h3>
+    <div class="field"><label for="r5">What specific steps will you take over the next six months to prepare for your chosen career?</label>
+      <textarea id="r5" data-f style="--rows:10" placeholder="Write specific, realistic steps with a rough timeline (for example by month)"></textarea></div>
+  </section>
+
+  <!-- ---------------- PART D ---------------- -->
+  <h2 class="part">PART D: INTERVIEWER'S QUESTION</h2>
+  <p class="callout">Your lecturer may select any group member to answer ONE interview-style question related to the group's case study. Be prepared to explain your reasoning and justify your proposed solution.</p>
+  <div>
+    <p class="lbl" style="margin-bottom:.15rem">Example questions:</p>
+    <ul class="qlist">
+      <li>How would you troubleshoot a network connectivity problem?</li>
+      <li>Why might an organization use VLANs and ACLs together?</li>
+      <li>How would you improve network reliability if one network link failed?</li>
+      <li>What would you investigate if a cloud application became unreachable?</li>
+      <li>Why is network automation useful in modern organizations?</li>
+    </ul>
+  </div>
+  <div class="field">
+    <label for="d-resp">My response / key learning:</label>
+    <textarea id="d-resp" data-f style="--rows:4" placeholder="Write the question you were asked and your key learning"></textarea>
+  </div>
+
+  <!-- ---------------- REFERENCES + CHECKLIST ---------------- -->
+  <div class="field">
+    <label for="refs">References <span class="sub">(at least TWO credible sources, for example vendor documentation, standards bodies, news reports, textbooks)</span></label>
+    <textarea id="refs" data-f style="--rows:3" placeholder="Title, author or organization, year, and link for each source"></textarea>
+  </div>
+
+  <fieldset>
+    <legend class="lbl" style="margin-bottom:.2rem">FINAL CHECKLIST <span class="sub">(tick each item when complete)</span></legend>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="ck1" data-f>Identified a real-world networking problem.</label>
+      <label class="check"><input type="checkbox" id="ck2" data-f>Analysed the problem using relevant networking concepts.</label>
+      <label class="check"><input type="checkbox" id="ck3" data-f>Proposed and justified a technical solution.</label>
+      <label class="check"><input type="checkbox" id="ck4" data-f>Included a network diagram or troubleshooting flowchart.</label>
+      <label class="check"><input type="checkbox" id="ck5" data-f>Investigated TWO networking careers.</label>
+      <label class="check"><input type="checkbox" id="ck6" data-f>Analysed ONE actual job advertisement.</label>
+      <label class="check"><input type="checkbox" id="ck7" data-f>Provided at least TWO credible references.</label>
+      <label class="check"><input type="checkbox" id="ck8" data-f>Completed the individual career reflection.</label>
+    </div>
+  </fieldset>
+
+  <footer class="pagefoot">
+    <p class="remember">Remember: The goal is not just to understand computer networks, but to understand how networking knowledge can solve real-world problems and prepare you for your future career.</p>
+    <p class="smallfoot">Advanced Computer Network | Student Learning Activity</p>
+  </footer>
+</section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var KEY = 'acn_career_activity_v1';
+  var $ = function (id) { return document.getElementById(id); };
+
+  var fields = [].slice.call(document.querySelectorAll('[data-f]'));
+  var areas = [].slice.call(document.querySelectorAll('textarea'));
+  var radios = [].slice.call(document.querySelectorAll('input[name="case"]'));
+  var cards = [].slice.call(document.querySelectorAll('.case-card'));
+  var fCase = $('f-case');
+  var statusEl = $('status');
+  var printStyle = $('print-css');
+  var screenStyle = $('screen-css');
+  var root = document.documentElement;
+
+  /* ---------- helpers ---------- */
+  function say(msg, isError) {
+    statusEl.textContent = msg;
+    statusEl.className = isError ? 'err' : 'ok';
+  }
+
+  function selectedCase() {
+    var r = document.querySelector('input[name="case"]:checked');
+    return r ? r.value : '';
+  }
+
+  function paintCards() {
+    cards.forEach(function (c) {
+      c.classList.toggle('selected', c.querySelector('input').checked);
+    });
+  }
+
+  function growOne(t) {
+    t.style.height = '';
+    var border = t.offsetHeight - t.clientHeight;
+    var need = t.scrollHeight + border;
+    if (need > t.offsetHeight + 1) { t.style.height = need + 'px'; }
+  }
+  function growAll() { areas.forEach(growOne); }
+
+  function timeNow() {
+    var d = new Date();
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+  }
+
+  /* ---------- A. case study selection ---------- */
+  radios.forEach(function (r) {
+    r.addEventListener('change', function () {
+      paintCards();
+      if (r.checked && (fCase.value === '' || fCase.dataset.auto === '1')) {
+        fCase.value = r.value;
+        fCase.dataset.auto = '1';
+      }
+    });
+  });
+  fCase.addEventListener('input', function () { fCase.dataset.auto = '0'; });
+
+  /* ---------- B. form input ---------- */
+  areas.forEach(function (t) {
+    t.addEventListener('input', function () { growOne(t); });
+  });
+
+  /* ---------- C. save / load / clear ---------- */
+  function collect() {
+    var data = { v: {}, c: {}, sel: selectedCase(), auto: fCase.dataset.auto || '0', saved: new Date().toISOString() };
+    fields.forEach(function (f) {
+      if (f.type === 'checkbox') { data.c[f.id] = f.checked; } else { data.v[f.id] = f.value; }
+    });
+    return data;
+  }
+
+  function apply(data) {
+    fields.forEach(function (f) {
+      if (f.type === 'checkbox') { f.checked = !!(data.c && data.c[f.id]); }
+      else { f.value = (data.v && typeof data.v[f.id] === 'string') ? data.v[f.id] : ''; }
+    });
+    radios.forEach(function (r) { r.checked = (r.value === data.sel); });
+    fCase.dataset.auto = data.auto || '0';
+    paintCards();
+    growAll();
+  }
+
+  $('btn-save').addEventListener('click', function () {
+    try {
+      localStorage.setItem(KEY, JSON.stringify(collect()));
+      say('Progress saved at ' + timeNow() + '. It is stored in this browser on this device only.', false);
+    } catch (e) {
+      say('Could not save. Your browser may be blocking local storage. Use Print / Save as PDF to keep a copy.', true);
+    }
+  });
+
+  $('btn-load').addEventListener('click', function () {
+    var raw = null;
+    try { raw = localStorage.getItem(KEY); } catch (e) {
+      say('Could not read saved progress. Your browser may be blocking local storage.', true);
+      return;
+    }
+    if (!raw) { say('No saved progress was found in this browser.', true); return; }
+    try {
+      apply(JSON.parse(raw));
+      say('Saved progress loaded.', false);
+    } catch (e) {
+      say('The saved data could not be read.', true);
+    }
+  });
+
+  $('btn-clear').addEventListener('click', function () {
+    var ok = window.confirm('Clear all answers?\n\nThis removes everything you typed and your saved progress in this browser. It cannot be undone.');
+    if (!ok) { say('Nothing was cleared.', false); return; }
+    try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+    fields.forEach(function (f) {
+      if (f.type === 'checkbox') { f.checked = false; } else { f.value = ''; }
+    });
+    radios.forEach(function (r) { r.checked = false; });
+    fCase.dataset.auto = '1';
+    paintCards();
+    growAll();
+    say('All answers and saved progress were cleared.', false);
+  });
+
+  /* ---------- D. print: fit content to exactly two A4 pages ---------- */
+  function withPrintLayout(fn) {
+    var pm = printStyle.media, sm = screenStyle.media;
+    screenStyle.media = 'not all';
+    printStyle.media = 'all';
+    try { return fn(); }
+    finally { printStyle.media = pm; screenStyle.media = sm; }
+  }
+
+  function fitToTwoPages() {
+    var sheets = [].slice.call(document.querySelectorAll('.sheet'));
+    withPrintLayout(function () {
+      var pf = 8.2, min = 5.6;
+      for (;;) {
+        root.style.setProperty('--pf', pf);
+        growAll();
+        var fits = sheets.every(function (s) { return s.scrollHeight <= s.clientHeight + 1; });
+        if (fits || pf <= min) { break; }
+        pf = Math.round((pf - 0.1) * 10) / 10;
+      }
+    });
+  }
+
+  window.addEventListener('beforeprint', fitToTwoPages);
+  window.addEventListener('afterprint', function () {
+    root.style.removeProperty('--pf');
+    growAll();
+  });
+
+  $('btn-print').addEventListener('click', function () {
+    /* E. validation: warn, but never block printing */
+    if (!selectedCase()) {
+      var go = window.confirm('You have not selected a case study yet.\n\nPress OK to print anyway, or Cancel to go back and choose one.');
+      if (!go) {
+        say('Please select one case study in Part A.', true);
+        var first = $('case1');
+        if (first) { first.focus(); first.scrollIntoView({ block: 'center' }); }
+        return;
+      }
+    }
+    window.print();
+  });
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(growAll, 120);
+  });
+
+  fCase.dataset.auto = '1';
+  paintCards();
+  growAll();
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(growAll); }
+})();
+</script>
+</body>
+</html>
